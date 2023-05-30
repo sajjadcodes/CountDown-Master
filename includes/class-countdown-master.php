@@ -57,6 +57,8 @@ class Countdown_Master {
 	 */
 	protected $version;
 
+	protected $shortcodes;
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -126,6 +128,12 @@ class Countdown_Master {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-countdown-master-public.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-countdown-master-shortcodes.php';
+
+		$this->shortcodes = new Countdown_Master_Shortcodes();
+
+
+
 		$this->loader = new Countdown_Master_Loader();
 
 	}
@@ -175,6 +183,8 @@ class Countdown_Master {
 		$this->loader->add_action('admin_init',$plugin_setting_Page, 'wpct_plugin_settings_customize');
 
 		$this->loader->add_action('admin_init',$plugin_setting_Page, 'wpct_plugin_settings');
+
+		
 
 	}
 

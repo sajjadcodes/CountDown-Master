@@ -116,6 +116,10 @@ class Countdown_Master {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-countdown-master-admin.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-countdown-master-menu.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-countdown-master-setting-page.php';
+
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
@@ -154,8 +158,23 @@ class Countdown_Master {
 
 		$plugin_admin = new Countdown_Master_Admin( $this->get_plugin_name(), $this->get_version() );
 
+		$plugin_menu = new Countdown_Master_Menu();
+
+		$plugin_setting_Page = new Countdown_Master_setting_Page();
+
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		// Menu
+		$this->loader->add_action('admin_menu',$plugin_menu, 'wpct_register_menu_page');
+
+
+		$this->loader->add_action('admin_init',$plugin_setting_Page, 'wpct_plugin_settings_social_links');
+
+
+		$this->loader->add_action('admin_init',$plugin_setting_Page, 'wpct_plugin_settings_customize');
+
+		$this->loader->add_action('admin_init',$plugin_setting_Page, 'wpct_plugin_settings');
 
 	}
 

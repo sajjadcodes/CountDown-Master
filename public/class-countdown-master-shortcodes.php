@@ -63,6 +63,8 @@ class Countdown_Master_Shortcodes {
 
             $alignment = get_option('wpct_alignment', 'left');
             $main_format = (array) get_option('wpct_main_format', array());
+            $labels_text = (array) get_option('wpct_labels_text', array());
+
 
             $format = isset($atts['format']) ? $atts['format'] : '';
             $deadline = new DateTime($format);
@@ -74,39 +76,57 @@ class Countdown_Master_Shortcodes {
             $seconds = $remaining->s;
 
             $title = get_option('wpct_countdown_title_field_cp');
-            $title_font_size = get_option('wpct_title_font_size', '16px');
-            $title_color = get_option('wpct_title_color_callback', '#00BF96');
-            $days_color = get_option('wpct_days_color', '#00816A');
-            $days_bg_color = get_option('wpct_days_bg_color', '#00816A');
+            $title_font_size = get_option('wpct_title_font_size', '40px');
+            $title_color = get_option('wpct_title_color', '#00BF96');
+            $title_weight = get_option('wpct_title_weight', '600');
+            $title_line_height = get_option('wpct_title_line_height', '1.3');
+            $number_font_size = get_option('wpct_number_font_size', '30px');
+            $number_color = get_option('wpct_number_color', '#ffffff');
+            $number_bg_color = get_option('wpct_number_bg_color', '#00BF96');
+            $number_weight = get_option('wpct_number_weight', '600');
+            $number_line_height = get_option('wpct_number_line_height', '1.3');
+            $label_font_size = get_option('wpct_label_font_size', '14px');
+            $label_color = get_option('wpct_label_color', '#ffffff');
+            $label_weight = get_option('wpct_label_weight', '400');
+            $label_line_height = get_option('wpct_label_line_height', '1.3');
+            $label_bg_color = get_option('wpct_label_bg_color', '#008044');
 
             $output = '<div id="clockdiv" style="text-align:' . $alignment . ';">';
-            $output .= '<h1 style="color: ' . esc_attr($title_color) . '; font-size: ' . esc_attr($title_font_size) . ';">' . esc_html($title) . '</h1>';
+            $output .= '<h1 style="color: ' . esc_attr($title_color) . '; font-size: ' . esc_attr($title_font_size) . '; font-weight: ' . esc_attr($title_weight) . '; line-height: ' . esc_attr($title_line_height) . '; ">' . esc_html($title) . '</h1>';
 
             if (in_array('days', $main_format)) {
-                $output .= '<div style = "background-color: ' . esc_attr($days_bg_color) . '">';
-                $output .= '<span style = "background-color: ' . esc_attr($days_color) . ' ; " class="days"> ' . $days . '</span>';
-                $output .= '<div class="smalltext">Days</div>';
+                $output .= '<div style = "background-color: ' . esc_attr($label_bg_color) . ' ;">';
+                $output .= '<span style = "color: ' . esc_attr($number_color) . ' ; background-color: ' . esc_attr($number_bg_color) . ' ; font-size: ' . esc_attr($number_font_size) . ' ; font-weight: ' . esc_attr($number_weight) . ' ; line-height: ' . esc_attr($number_line_height) . ' ;" class="days"> ' . $days . '</span>';
+                if(in_array('labels', $labels_text )){
+                $output .= '<div style="font-size: ' . esc_attr($label_font_size) . ' ; color: ' . esc_attr($label_color) . ' ; font-weight: ' . esc_attr($label_weight) . ' ; line-height: ' . esc_attr($label_line_height) . ' ;" class="smalltext">Days</div>';
+                }
                 $output .= '</div>';
             }
 
             if (in_array('hours', $main_format)) {
-                $output .= '<div style = "background-color: ' . esc_attr($days_bg_color) . '">';
-                $output .= '<span style = "background-color: ' . esc_attr($days_color) . ' ; " class="hours"> ' . $hours . '</span>';
-                $output .= '<div class="smalltext">Hours</div>';
+                $output .= '<div style = "background-color: ' . esc_attr($label_bg_color) . '">';
+                $output .= '<span style = "color: ' . esc_attr($number_color) . ' ; background-color: ' . esc_attr($number_bg_color) . ' ; font-size: ' . esc_attr($number_font_size) . ' ; font-weight: ' . esc_attr($number_weight) . ' ; line-height: ' . esc_attr($number_line_height) . ' ;" class="hours"> ' . $hours . '</span>';
+                if(in_array('labels', $labels_text )){
+                $output .= '<div style="font-size: ' . esc_attr($label_font_size) . ' ; color: ' . esc_attr($label_color) . ' ; font-weight: ' . esc_attr($label_weight) . ' ; line-height: ' . esc_attr($label_line_height) . ' ;" class="smalltext">Hours</div>';
+                }
                 $output .= '</div>';
             }
 
             if (in_array('minutes', $main_format)) {
-                $output .= '<div style = "background-color: ' . esc_attr($days_bg_color) . '">';
-                $output .= '<span style = "background-color: ' . esc_attr($days_color) . ' ; " class="minutes"> ' . $minutes . '</span>';
-                $output .= '<div class="smalltext">Minutes</div>';
+                $output .= '<div style = "background-color: ' . esc_attr($label_bg_color) . '">';
+                $output .= '<span style = "color: ' . esc_attr($number_color) . ' ; background-color: ' . esc_attr($number_bg_color) . ' ; font-size: ' . esc_attr($number_font_size) . ' ; font-weight: ' . esc_attr($number_weight) . ' ; line-height: ' . esc_attr($number_line_height) . ' ;" class="minutes"> ' . $minutes . '</span>';
+                if(in_array('labels', $labels_text )){
+                $output .= '<div style="font-size: ' . esc_attr($label_font_size) . ' ; color: ' . esc_attr($label_color) . ' ; font-weight: ' . esc_attr($label_weight) . ' ; line-height: ' . esc_attr($label_line_height) . ' ;" class="smalltext">Minutes</div>';
+                }
                 $output .= '</div>';
             }
 
             if (in_array('seconds', $main_format)) {
-                $output .= '<div style = "background-color: ' . esc_attr($days_bg_color) . '">';
-                $output .= '<span style = "background-color: ' . esc_attr($days_color) . ' ; " class="seconds"> ' . $seconds . '</span>';
-                $output .= '<div class="smalltext">Seconds</div>';
+                $output .= '<div style = "background-color: ' . esc_attr($label_bg_color) . '">';
+                $output .= '<span style = "color: ' . esc_attr($number_color) . ' ; background-color: ' . esc_attr($number_bg_color) . ' ; font-size: ' . esc_attr($number_font_size) . ' ; font-weight: ' . esc_attr($number_weight) . ' ; line-height: ' . esc_attr($number_line_height) . ' ;" class="seconds"> ' . $seconds . '</span>';
+                if(in_array('labels', $labels_text )){
+                $output .= '<div style="font-size: ' . esc_attr($label_font_size) . ' ; color: ' . esc_attr($label_color) . ' ; font-weight: ' . esc_attr($label_weight) . ' ; line-height: ' . esc_attr($label_line_height) . ' ;" class="smalltext">Seconds</div>';
+                }
                 $output .= '</div>';
             }
 

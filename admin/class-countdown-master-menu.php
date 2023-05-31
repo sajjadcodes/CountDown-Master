@@ -42,6 +42,7 @@ class Countdown_Master_Menu {
                     <li class="active"><a href="#tab-1">General Settings</a></li>
                     <li><a href="#tab-2">Customize</a></li>
                     <li><a href="#tab-3">Social Links</a></li>
+                    <li><a href="#tab-4">Templates</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-1" class="tab-pane active">
@@ -69,6 +70,16 @@ class Countdown_Master_Menu {
                         <?php
                             settings_fields('wpct-settings-social-links');
                             do_settings_sections('wpct-settings-social-links');
+                            submit_button('Save Changes');
+                        ?>
+                        </form>  
+                    </div>
+                    <div id="tab-4" class="tab-pane">
+                        <h3>Templates</h3>
+                        <form action="options.php" method="post">
+                        <?php
+                            settings_fields('wpct-settings-templates');
+                            do_settings_sections('wpct-settings-templates');
                             submit_button('Save Changes');
                         ?>
                         </form>  

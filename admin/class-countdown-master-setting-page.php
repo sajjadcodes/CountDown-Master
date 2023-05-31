@@ -35,6 +35,11 @@ class Countdown_Master_setting_Page {
         add_settings_field('wpct_social_icons', 'Social Icons', [$this,'wpct_social_icons_field_callback'], 'wpct-settings-social-links', 'wpct_icons_section');
     }
 
+    public function wpct_plugin_settings_templates() {
+        add_settings_section('wpct_templates_section', '','', 'wpct-settings-templates');
+        register_setting('wpct-settings-templates','');
+    }
+
     public function wpct_icons_section_callback() {
         echo '<p>This section allows you to configure the social icons for your plugin.</p>';
         echo '<p>Please enter the URLs for your social media profiles below:</p>';

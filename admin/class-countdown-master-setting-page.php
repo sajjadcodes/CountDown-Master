@@ -26,7 +26,6 @@ class Countdown_Master_setting_Page
 
     public function __construct()
     {
-        add_action('admin_init', [$this, 'wpct_image_settings_callback']);
     }
 
     public function wpct_plugin_settings_social_links()
@@ -40,7 +39,8 @@ class Countdown_Master_setting_Page
     public function wpct_plugin_settings_templates()
     {
         add_settings_section('wpct_templates_section', '', '', 'wpct-settings-templates');
-        register_setting('wpct-settings-templates', '');
+        register_setting('wpct-settings-templates', 'wpct_images_gallery_templates');
+        add_settings_field('wpct_templates_field', 'Templates', [$this, 'wpct_templates_gallery_field'], 'wpct-settings-templates', 'wpct_templates_section');
     }
 
     public function wpct_image_settings_callback()
@@ -152,6 +152,30 @@ class Countdown_Master_setting_Page
             wp_redirect(admin_url('admin.php?page=wpct-settings'));
             exit;
         }
+    }
+
+
+    public function wpct_templates_gallery_field()
+    {
+        $templates_gallery = get_option('wpct_images_gallery_templates');
+        $image_thumb_url = wp_get_attachment_image_src($templates_gallery, 'thumbnail');
+
+        // Retrieve the list of available templates (image URLs or attachment IDs)
+        $templates = array(
+            'template1' => plugin_dir_url(__FILE__) . '../assets/img/micro.jpg',
+            'template2' => plugin_dir_url(__FILE__) . '../assets/img/micro2.jpg',
+            // Add more templates as needed
+        );
+    ?>
+        <div class="wpct-gallery">
+            <?php foreach ($templates as $template_id => $template_url) : ?>
+                <label>
+                    <input type="radio" name="wpct_images_gallery_templates" value="<?php echo esc_attr($template_id); ?>" <?php checked($templates_gallery, $template_id); ?>>
+                    <img src="<?php echo esc_url($template_url); ?>" class="temp_imgs" alt="<?php echo esc_attr($template_id); ?>">
+                </label>
+            <?php endforeach; ?>
+        </div>
+    <?php
     }
 
 

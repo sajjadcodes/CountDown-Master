@@ -27,7 +27,8 @@
  * @subpackage Countdown_Master/includes
  * @author     Sajad <sajjadcodes@gmail.com>
  */
-class Countdown_Master {
+class Countdown_Master
+{
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -68,8 +69,9 @@ class Countdown_Master {
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct() {
-		if ( defined( 'COUNTDOWN_MASTER_VERSION' ) ) {
+	public function __construct()
+	{
+		if (defined('COUNTDOWN_MASTER_VERSION')) {
 			$this->version = COUNTDOWN_MASTER_VERSION;
 		} else {
 			$this->version = '1.0.0';
@@ -80,7 +82,6 @@ class Countdown_Master {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
 	}
 
 	/**
@@ -99,43 +100,43 @@ class Countdown_Master {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function load_dependencies() {
+	private function load_dependencies()
+	{
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-countdown-master-loader.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-countdown-master-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-countdown-master-i18n.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-countdown-master-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-countdown-master-admin.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-countdown-master-admin.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-countdown-master-menu.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-countdown-master-menu.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-countdown-master-setting-page.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-countdown-master-setting-page.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-countdown-master-public.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-countdown-master-public.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-countdown-master-shortcodes.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-countdown-master-shortcodes.php';
 
 		$this->shortcodes = new Countdown_Master_Shortcodes();
 
 
 
 		$this->loader = new Countdown_Master_Loader();
-
 	}
 
 	/**
@@ -147,12 +148,12 @@ class Countdown_Master {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function set_locale() {
+	private function set_locale()
+	{
 
 		$plugin_i18n = new Countdown_Master_i18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
+		$this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
 	}
 
 	/**
@@ -162,30 +163,32 @@ class Countdown_Master {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_admin_hooks() {
+	private function define_admin_hooks()
+	{
 
-		$plugin_admin = new Countdown_Master_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Countdown_Master_Admin($this->get_plugin_name(), $this->get_version());
 
 		$plugin_menu = new Countdown_Master_Menu();
 
 		$plugin_setting_Page = new Countdown_Master_setting_Page();
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 
 		// Menu
-		$this->loader->add_action('admin_menu',$plugin_menu, 'wpct_register_menu_page');
+		$this->loader->add_action('admin_menu', $plugin_menu, 'wpct_register_menu_page');
 
 
-		$this->loader->add_action('admin_init',$plugin_setting_Page, 'wpct_plugin_settings_social_links');
+		$this->loader->add_action('admin_init', $plugin_setting_Page, 'wpct_plugin_settings_social_links');
 
 
-		$this->loader->add_action('admin_init',$plugin_setting_Page, 'wpct_plugin_settings_customize');
+		$this->loader->add_action('admin_init', $plugin_setting_Page, 'wpct_plugin_settings_customize');
 
-		$this->loader->add_action('admin_init',$plugin_setting_Page, 'wpct_plugin_settings');
+		$this->loader->add_action('admin_init', $plugin_setting_Page, 'wpct_plugin_settings');
 
-		
+		$this->loader->add_action('admin_init', $plugin_setting_Page, 'wpct_image_settings_callback');
 
+		$this->loader->add_action('admin_init', $plugin_setting_Page, 'wpct_plugin_settings_templates');
 	}
 
 	/**
@@ -195,13 +198,13 @@ class Countdown_Master {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_public_hooks() {
+	private function define_public_hooks()
+	{
 
-		$plugin_public = new Countdown_Master_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Countdown_Master_Public($this->get_plugin_name(), $this->get_version());
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
+		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
+		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
 	}
 
 	/**
@@ -209,7 +212,8 @@ class Countdown_Master {
 	 *
 	 * @since    1.0.0
 	 */
-	public function run() {
+	public function run()
+	{
 		$this->loader->run();
 	}
 
@@ -220,7 +224,8 @@ class Countdown_Master {
 	 * @since     1.0.0
 	 * @return    string    The name of the plugin.
 	 */
-	public function get_plugin_name() {
+	public function get_plugin_name()
+	{
 		return $this->plugin_name;
 	}
 
@@ -230,7 +235,8 @@ class Countdown_Master {
 	 * @since     1.0.0
 	 * @return    Countdown_Master_Loader    Orchestrates the hooks of the plugin.
 	 */
-	public function get_loader() {
+	public function get_loader()
+	{
 		return $this->loader;
 	}
 
@@ -240,8 +246,8 @@ class Countdown_Master {
 	 * @since     1.0.0
 	 * @return    string    The version number of the plugin.
 	 */
-	public function get_version() {
+	public function get_version()
+	{
 		return $this->version;
 	}
-
 }

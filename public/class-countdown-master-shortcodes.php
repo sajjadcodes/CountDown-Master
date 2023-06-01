@@ -97,24 +97,11 @@ class Countdown_Master_Shortcodes
         $image = get_option('image_upload');
         $image_url = wp_get_attachment_url($image);
         $image_thumb_url = wp_get_attachment_image_src($image, 'thumbnail');
-        var_dump($image_thumb_url);
         $output = '<div id="clockdiv" style="text-align:' . $alignment . ';">';
         if (!empty($image_url)) {
             $output .= '<img src="' . esc_attr($image_thumb_url[0]) . '" alt="Uploaded Image">';
         }
-        var_dump($image_url);
         $output .= '<h1 style="color: ' . esc_attr($title_color) . '; font-size: ' . esc_attr($title_font_size) . '; font-weight: ' . esc_attr($title_weight) . '; line-height: ' . esc_attr($title_line_height) . '; ">' . esc_html($title) . '</h1>';
-
-        // $image = get_option('image_upload');
-        // $image_url = wp_get_attachment_url($image);
-        // $image_thumb_url = wp_get_attachment_image_src($image, 'thumbnail');
-        // var_dump($image_thumb_url);
-        // $output = '<div id="clockdiv" style="text-align:' . $alignment . ';">';
-        // if (!empty($image_url)) {
-        //     $output .= '<img src="' . esc_attr($image_url) . '" alt="Uploaded Image">';
-        // }
-        // $output .= '<h1 style="color: ' . esc_attr($title_color) . '; font-size: ' . esc_attr($title_font_size) . '; font-weight: ' . esc_attr($title_weight) . '; line-height: ' . esc_attr($title_line_height) . '; ">' . esc_html($title) . '</h1>';
-
 
         if (in_array('days', $main_format)) {
             $output .= '<div style = "background-color: ' . esc_attr($label_bg_color) . ' ;">';

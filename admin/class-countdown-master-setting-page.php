@@ -26,6 +26,7 @@ class Countdown_Master_setting_Page
 
     public function __construct()
     {
+        add_action('admin_init', [$this, 'wpct_image_settings_callback']);
     }
 
     public function wpct_plugin_settings_social_links()
@@ -40,6 +41,13 @@ class Countdown_Master_setting_Page
     {
         add_settings_section('wpct_templates_section', '', '', 'wpct-settings-templates');
         register_setting('wpct-settings-templates', '');
+    }
+
+    public function wpct_image_settings_callback()
+    {
+        add_settings_section('wpct_image_section', '', '', 'wpct-image-settings');
+        register_setting('wpct-image-settings', 'image_upload');
+        add_settings_field('wpct_image_field', 'Add Image', [$this, 'wpct_image_field_cp'], 'wpct-image-settings', 'wpct_image_section');
     }
 
     public function wpct_icons_section_callback()
@@ -86,7 +94,6 @@ class Countdown_Master_setting_Page
     {
         add_settings_section('wpct_label_settings_section', 'Create a Master Countdown', [$this, 'wpct_plugin_shortcode_details'], 'wpct-settings');
         register_setting('wpct-settings', 'wpct_countdown_title_field_cp');
-        register_setting('wpct-settings', '`image_upload`');
         register_setting('wpct-settings', 'wpct_alignment');
         register_setting('wpct-settings', 'wpct_main_format');
         register_setting('wpct-settings', 'wpct_labels_text');
@@ -106,17 +113,25 @@ class Countdown_Master_setting_Page
     {
         // get the value of the setting we've registered with register_setting()
         $setting = get_option('wpct_countdown_title_field_cp');
+    ?>
+        <input type="text" name="wpct_countdown_title_field_cp" value="<?php echo isset($setting) ? esc_attr($setting) : ''; ?>">
+    <?php
+    }
+
+    public function wpct_image_field_cp()
+    {
+
         $image = get_option('image_upload');
         $image_thumb_url = wp_get_attachment_image_src($image, 'thumbnail');
     ?>
         <label for="image_upload">Upload an Image:</label>
         <input type="file" id="image_upload" name="image_upload">
+        <br>
+        <br>
         <?php if (!empty($image_thumb_url)) : ?>
             <img src="<?php echo esc_attr($image_thumb_url[0]); ?>" alt="Uploaded Image">
             <input type="hidden" name="image_upload_url" value="<?php echo esc_attr($image); ?>">
         <?php endif; ?>
-        <br>
-        <input type="text" name="wpct_countdown_title_field_cp" value="<?php echo isset($setting) ? esc_attr($setting) : ''; ?>">
     <?php
     }
 

@@ -39,9 +39,10 @@ class Countdown_Master_Menu
             <?php settings_errors(); ?>
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab-1">General Settings</a></li>
-                <li><a href="#tab-2">Customize</a></li>
-                <li><a href="#tab-3">Social Links</a></li>
-                <li><a href="#tab-4">Templates</a></li>
+                <li><a href="#tab-2">Add Image</a></li>
+                <li><a href="#tab-3">Customize</a></li>
+                <li><a href="#tab-4">Social Links</a></li>
+                <li><a href="#tab-5">Templates</a></li>
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active">
@@ -53,11 +54,12 @@ class Countdown_Master_Menu
                         ?>
                     </form>
                 </div>
-                <div id="tab-2" class="tab-pane active">
+                <div id="tab-2" class="tab-pane">
+                    <h3>Add Image</h3>
                     <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" enctype="multipart/form-data">
                         <?php
-                        settings_fields('wpct-settings');
-                        do_settings_sections('wpct-settings');
+                        settings_fields('wpct-image-settings');
+                        do_settings_sections('wpct-image-settings');
                         submit_button('Save Changes');
                         ?>
                         <input type="hidden" name="action" value="wpct_save_image_upload">

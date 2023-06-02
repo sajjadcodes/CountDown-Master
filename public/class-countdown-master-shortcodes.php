@@ -39,16 +39,18 @@ class Countdown_Master_Shortcodes
             $output .= '<ul class="wpct-social-icons">';
 
             foreach ($social_icons as $social => $url) {
-                $icon_class = '';
+                if (!empty($url)) {
+                    $icon_class = '';
 
-                if ($social === 'facebook') {
-                    $icon_class = 'fab fa-facebook-f';
-                } elseif ($social === 'twitter') {
-                    $icon_class = 'fab fa-twitter';
-                } elseif ($social === 'instagram') {
-                    $icon_class = 'fab fa-instagram';
+                    if ($social === 'facebook') {
+                        $icon_class = 'fab fa-facebook-f';
+                    } elseif ($social === 'twitter') {
+                        $icon_class = 'fab fa-twitter';
+                    } elseif ($social === 'instagram') {
+                        $icon_class = 'fab fa-instagram';
+                    }
+                    $output .= '<li><a href="' . esc_url($url) . '" target="_blank" class="wpct-social-icon wpct-social-' . esc_attr($social) . '"><i class="' . esc_attr($icon_class) . '"></i></a></li>';
                 }
-                $output .= '<li><a href="' . esc_url($url) . '" target="_blank" class="wpct-social-icon wpct-social-' . esc_attr($social) . '"><i class="' . esc_attr($icon_class) . '"></i></a></li>';
             }
 
             $output .= '</ul>';

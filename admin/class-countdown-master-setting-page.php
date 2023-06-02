@@ -131,6 +131,7 @@ class Countdown_Master_setting_Page
         <?php if (!empty($image_thumb_url)) : ?>
             <img src="<?php echo esc_attr($image_thumb_url[0]); ?>" alt="Uploaded Image">
             <input type="hidden" name="image_upload_url" value="<?php echo esc_attr($image); ?>">
+            <input type="submit" name="delete_attachement" class="button button-danger" value="Delete">
         <?php endif; ?>
     <?php
     }
@@ -148,12 +149,17 @@ class Countdown_Master_setting_Page
             if (!is_wp_error($attachment_id)) {
                 update_option('image_upload', $attachment_id);
             }
-
-            wp_redirect(admin_url('admin.php?page=wpct-settings'));
-            exit;
         }
-    }
 
+        if (isset($_POST['delete_attachement'])) {
+            $attachment_id = get_option('image_upload');
+            wp_delete_attachment($attachment_id);
+            update_option('image_upload', '');
+        }
+
+        wp_redirect(admin_url('admin.php?page=wpct-settings'));
+        exit;
+    }
 
     public function wpct_templates_gallery_field()
     {

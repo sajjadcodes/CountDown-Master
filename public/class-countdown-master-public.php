@@ -20,7 +20,8 @@
  * @subpackage Countdown_Master/public
  * @author     Sajad <sajjadcodes@gmail.com>
  */
-class Countdown_Master_Public {
+class Countdown_Master_Public
+{
 
 	/**
 	 * The ID of this plugin.
@@ -47,11 +48,11 @@ class Countdown_Master_Public {
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct($plugin_name, $version)
+	{
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
 	}
 
 	/**
@@ -59,7 +60,8 @@ class Countdown_Master_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -73,17 +75,17 @@ class Countdown_Master_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/countdown-master-public.css', array(), $this->version, 'all' );
+		//wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/countdown-master-public.css', array(), $this->version, 'all');
 		wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
-
 	}
 
 	/**
-	 * Register the JavaScript for the public-facing side of the site.
+	 * Register the JavaScript for the public-facing 0side of the site.
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -97,8 +99,6 @@ class Countdown_Master_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/countdown-master-public.js', array( 'jquery' ), $this->version, false );
-
+		//wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/countdown-master-public.js', array('jquery'), $this->version, false);
 	}
-
 }

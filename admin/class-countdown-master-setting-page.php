@@ -39,8 +39,8 @@ class Countdown_Master_setting_Page
     public function wpct_plugin_settings_templates()
     {
         add_settings_section('wpct_templates_section', '', '', 'wpct-settings-templates');
-        register_setting('wpct-settings-templates', 'wpct_images_gallery_templates');
-        add_settings_field('wpct_templates_field', 'Templates', [$this, 'wpct_templates_gallery_field'], 'wpct-settings-templates', 'wpct_templates_section');
+        register_setting('wpct-settings-templates', 'wpct_templates');
+        add_settings_field('wpct_templates_field', 'Templates', [$this, 'wpct_templates_field'], 'wpct-settings-templates', 'wpct_templates_section');
     }
 
     public function wpct_image_settings_callback()
@@ -161,25 +161,19 @@ class Countdown_Master_setting_Page
         exit;
     }
 
-    public function wpct_templates_gallery_field()
+    public function wpct_templates_field()
     {
-        $templates_gallery = get_option('wpct_images_gallery_templates');
-        $image_thumb_url = wp_get_attachment_image_src($templates_gallery, 'thumbnail');
-
-        // Retrieve the list of available templates (image URLs or attachment IDs)
-        $templates = array(
-            'template1' => plugin_dir_url(__FILE__) . '../assets/img/micro.jpg',
-            'template2' => plugin_dir_url(__FILE__) . '../assets/img/micro2.jpg',
-            // Add more templates as needed
-        );
+        $templates = get_option('wpct_templates', '../countdown-1.php');
     ?>
         <div class="wpct-gallery">
-            <?php foreach ($templates as $template_id => $template_url) : ?>
-                <label>
-                    <input type="radio" name="wpct_images_gallery_templates" value="<?php echo esc_attr($template_id); ?>" <?php checked($templates_gallery, $template_id); ?>>
-                    <img src="<?php echo esc_url($template_url); ?>" class="temp_imgs" alt="<?php echo esc_attr($template_id); ?>">
-                </label>
-            <?php endforeach; ?>
+            <label>
+                <input type="radio" name="wpct_templates" value="../countdown-1.php" <?php checked('../countdown-1.php',  $templates); ?>>
+                <img src="<?php echo plugin_dir_url(__FILE__) . '../assets/img/micro.jpg'; ?>" class="temp_imgs" alt="Template 1">
+            </label>
+            <label>
+                <input type="radio" name="wpct_templates" value="../countdown-2.php" <?php checked('../countdown-2.php',  $templates); ?>>
+                <img src="<?php echo plugin_dir_url(__FILE__) . '../assets/img/micro2.jpg'; ?>" class="temp_imgs" alt="Template 2">
+            </label>
         </div>
     <?php
     }

@@ -61,12 +61,13 @@ class Countdown_Master_Shortcodes
 
     public function wpct_countdown_shortcode($atts)
     {
-
         $atts = shortcode_atts(array(
-            'format' => 'default'
+            'format' => 'default',
+            'templates' => '../countdown-1.php'
         ), $atts);
 
         $alignment = get_option('wpct_alignment', 'left');
+        $templates = $atts['templates'];
         $main_format = (array) get_option('wpct_main_format', array());
         $labels_text = (array) get_option('wpct_labels_text', array());
 
@@ -100,52 +101,12 @@ class Countdown_Master_Shortcodes
         $image_url = wp_get_attachment_url($image);
         $image_thumb_url = wp_get_attachment_image_src($image, 'thumbnail');
         $output = '<div id="clockdiv" style="text-align:' . $alignment . ';">';
-        if (!empty($image_url)) {
-            $output .= '<img src="' . esc_attr($image_thumb_url[0]) . '" alt="Uploaded Image">';
-        }
-        $output .= '<h1 style="color: ' . esc_attr($title_color) . '; font-size: ' . esc_attr($title_font_size) . '; font-weight: ' . esc_attr($title_weight) . '; line-height: ' . esc_attr($title_line_height) . '; ">' . esc_html($title) . '</h1>';
 
-        if (in_array('days', $main_format)) {
-            $output .= '<div style = "background-color: ' . esc_attr($label_bg_color) . ' ;">';
-            $output .= '<span style = "color: ' . esc_attr($number_color) . ' ; background-color: ' . esc_attr($number_bg_color) . ' ; font-size: ' . esc_attr($number_font_size) . ' ; font-weight: ' . esc_attr($number_weight) . ' ; line-height: ' . esc_attr($number_line_height) . ' ;" class="days"> ' . $days . '</span>';
-            if (in_array('labels', $labels_text)) {
-                $output .= '<div style="font-size: ' . esc_attr($label_font_size) . ' ; color: ' . esc_attr($label_color) . ' ; font-weight: ' . esc_attr($label_weight) . ' ; line-height: ' . esc_attr($label_line_height) . ' ;" class="smalltext">Days</div>';
-            }
-            $output .= '</div>';
-        }
+        ob_start();
+        $templates = get_option('wpct_templates', '');
+        include(plugin_dir_path(__FILE__) . '' . $templates);
 
-        if (in_array('hours', $main_format)) {
-            $output .= '<div style = "background-color: ' . esc_attr($label_bg_color) . '">';
-            $output .= '<span style = "color: ' . esc_attr($number_color) . ' ; background-color: ' . esc_attr($number_bg_color) . ' ; font-size: ' . esc_attr($number_font_size) . ' ; font-weight: ' . esc_attr($number_weight) . ' ; line-height: ' . esc_attr($number_line_height) . ' ;" class="hours"> ' . $hours . '</span>';
-            if (in_array('labels', $labels_text)) {
-                $output .= '<div style="font-size: ' . esc_attr($label_font_size) . ' ; color: ' . esc_attr($label_color) . ' ; font-weight: ' . esc_attr($label_weight) . ' ; line-height: ' . esc_attr($label_line_height) . ' ;" class="smalltext">Hours</div>';
-            }
-            $output .= '</div>';
-        }
-
-        if (in_array('minutes', $main_format)) {
-            $output .= '<div style = "background-color: ' . esc_attr($label_bg_color) . '">';
-            $output .= '<span style = "color: ' . esc_attr($number_color) . ' ; background-color: ' . esc_attr($number_bg_color) . ' ; font-size: ' . esc_attr($number_font_size) . ' ; font-weight: ' . esc_attr($number_weight) . ' ; line-height: ' . esc_attr($number_line_height) . ' ;" class="minutes"> ' . $minutes . '</span>';
-            if (in_array('labels', $labels_text)) {
-                $output .= '<div style="font-size: ' . esc_attr($label_font_size) . ' ; color: ' . esc_attr($label_color) . ' ; font-weight: ' . esc_attr($label_weight) . ' ; line-height: ' . esc_attr($label_line_height) . ' ;" class="smalltext">Minutes</div>';
-            }
-            $output .= '</div>';
-        }
-
-        if (in_array('seconds', $main_format)) {
-            $output .= '<div style = "background-color: ' . esc_attr($label_bg_color) . '">';
-            $output .= '<span style = "color: ' . esc_attr($number_color) . ' ; background-color: ' . esc_attr($number_bg_color) . ' ; font-size: ' . esc_attr($number_font_size) . ' ; font-weight: ' . esc_attr($number_weight) . ' ; line-height: ' . esc_attr($number_line_height) . ' ;" class="seconds"> ' . $seconds . '</span>';
-            if (in_array('labels', $labels_text)) {
-                $output .= '<div style="font-size: ' . esc_attr($label_font_size) . ' ; color: ' . esc_attr($label_color) . ' ; font-weight: ' . esc_attr($label_weight) . ' ; line-height: ' . esc_attr($label_line_height) . ' ;" class="smalltext">Seconds</div>';
-            }
-            $output .= '</div>';
-        }
-
-        $output .= $this->wpct_display_social_icons();
-
-        $output .= '</div>';
-
-        $output .= '<script>initializeClock("clockdiv", "' . $deadline->format('Y-m-d\TH:i:s') . '");</script>';
+        $output = ob_get_clean();
 
         return $output;
     }

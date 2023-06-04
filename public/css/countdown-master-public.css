@@ -5,55 +5,54 @@
 
 
 
-
- /*
+/*
 * WPCT CSS
 */
-body{
+body {
 	text-align: center;
 }
 
-h1{
-  margin: 40px 0px 20px;
+h1 {
+	margin: 40px 0px 20px;
 }
 
-#clockdiv{
+#clockdiv {
 	font-family: sans-serif;
 	display: inline-block;
 	text-align: center;
 }
 
-#clockdiv > div{
+#clockdiv>div {
 	padding: 10px;
 	border-radius: 3px;
 	display: inline-block;
 	margin: 5px;
 }
 
-#clockdiv div > span{
+#clockdiv div>span {
 	padding: 15px;
 	border-radius: 3px;
 	display: inline-block;
 }
 
-.smalltext{
+.smalltext {
 	padding-top: 5px;
 }
 
 .wpct-social-icons {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 .wpct-social-icons li {
-    display: inline-block;
-    margin-right: 10px;
+	display: inline-block;
+	margin-right: 10px;
 }
 
 .wpct-social-icon {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    padding: 10px;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	padding: 10px;
 }

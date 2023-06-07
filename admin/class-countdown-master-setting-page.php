@@ -96,7 +96,7 @@ class Countdown_Master_setting_Page
 
     public function wpct_plugin_settings()
     {
-        add_settings_section('wpct_label_settings_section', 'Create a Master Countdown', [$this, 'wpct_plugin_shortcode_details'], 'wpct-settings');
+        add_settings_section('wpct_label_settings_section', 'Create a Master Countdown', '', 'wpct-settings');
         register_setting('wpct-settings', 'wpct_countdown_title_field_cp');
         register_setting('wpct-settings', 'wpct_alignment');
         register_setting('wpct-settings', 'wpct_main_format');
@@ -155,21 +155,18 @@ class Countdown_Master_setting_Page
 
     function my_action()
     {
-        // Process the data and generate the shortcode
         $date_setting = get_option('wpct_countdown_calendar_field_cp');
         $select_time_hour = get_option('wpct_select_time_hour');
         $select_time_min = get_option('wpct_select_time_min');
 
-        // Save the options
         update_option('wpct_select_time_hour', $select_time_hour);
         update_option('wpct_select_time_min', $select_time_min);
 
         $shortcode = '[wpct_countdown format="' . $date_setting . ' ' . $select_time_hour . ':' . $select_time_min . '"]';
 
-        // Return the shortcode as the response
         echo $shortcode;
 
-        wp_die(); // Terminate immediately and return a proper response
+        wp_die();
     }
 
 
@@ -207,11 +204,11 @@ class Countdown_Master_setting_Page
 
 
 
-    public function wpct_plugin_shortcode_details()
-    {
-        echo '<p>To Display a Countdown on any place on the website Use Shortcode using the Below Format</p>';
-        echo '<p>[wpct_countdown format="2023-07-10"]</p>';
-    }
+    // public function wpct_plugin_shortcode_details()
+    // {
+    //     echo '<p>To Display a Countdown on any place on the website Use Shortcode using the Below Format</p>';
+    //     echo '<p>[wpct_countdown format="2023-07-10"]</p>';
+    // }
 
     public function wpct_countdown_title_field_cp()
     {

@@ -43,6 +43,7 @@ class Countdown_Master_Menu
                 <li><a href="#tab-3">Customize</a></li>
                 <li><a href="#tab-4">Social Links</a></li>
                 <li><a href="#tab-5">Templates</a></li>
+                <li><a href="#tab-6">Generate Shortcode</a></li>
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active">
@@ -93,6 +94,17 @@ class Countdown_Master_Menu
                         do_settings_sections('wpct-settings-templates');
                         submit_button('Save Changes');
                         ?>
+                    </form>
+                </div>
+                <div id="tab-6" class="tab-pane">
+                    <h3>Generate Shortcode</h3>
+                    <form id="my-form" action="options.php" method="post">
+                        <?php
+                        settings_fields('wpct-shortcode-settings');
+                        do_settings_sections('wpct-shortcode-settings');
+                        ?>
+                        <?php submit_button('Save Settings', 'primary', 'my-submit-button'); ?>
+                        <!-- <button id="my-button" class="button button-primary">Generate Shortcode</button> -->
                     </form>
                 </div>
             </div>

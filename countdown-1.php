@@ -15,7 +15,7 @@ add_action('wp_enqueue_scripts', 'my_page_scripts');
     <?php if (!empty($image_url)) : ?>
         <img src="<?php echo esc_attr($image_thumb_url[0]); ?>" alt="Uploaded Image">
     <?php endif; ?>
-    <h1 style="color: <?php echo esc_attr($title_color); ?>; font-size: <?php echo esc_attr($title_font_size); ?>;"><?php echo esc_html($title); ?></h1>
+    <h1 style="color: <?php echo esc_attr($title_color); ?>; font-size: <?php echo esc_attr($title_font_size); ?>; font-weight: <?php echo esc_attr($title_weight); ?>; font-family: <?php echo esc_attr($font_setting); ?>; line-height: <?php echo esc_attr($title_line_height); ?>;"><?php echo esc_html($title); ?></h1>
     <?php if (in_array('days', $main_format)) : ?>
         <div style="background-color: <?php echo esc_attr($label_bg_color); ?>">
             <span style="color: <?php echo esc_attr($number_color); ?>; background-color: <?php echo esc_attr($number_bg_color); ?>; font-size: <?php echo esc_attr($number_font_size); ?>; font-weight: <?php echo esc_attr($number_weight); ?>; line-height: <?php echo esc_attr($number_line_height); ?>;" class="days"><?php echo $days; ?></span>

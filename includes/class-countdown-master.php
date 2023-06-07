@@ -189,6 +189,8 @@ class Countdown_Master
 		$this->loader->add_action('admin_init', $plugin_setting_Page, 'wpct_image_settings_callback');
 
 		$this->loader->add_action('admin_init', $plugin_setting_Page, 'wpct_plugin_settings_templates');
+
+		$this->loader->add_action('admin_init', $plugin_setting_Page, 'wpct_plugin_settings_shortcode');
 	}
 
 	/**
@@ -205,6 +207,10 @@ class Countdown_Master
 
 		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
 		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+		wp_enqueue_script('jquery-ui-core');
+		wp_enqueue_script('jquery-ui-datepicker');
+		wp_enqueue_style('jquery-ui-style', 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
+		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles', 'google-fonts', 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Roboto:300,400,500,700|Raleway:300,400,500,700|Montserrat:300,400,500,700&display=swap');
 	}
 
 	/**

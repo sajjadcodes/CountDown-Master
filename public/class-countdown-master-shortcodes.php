@@ -82,6 +82,7 @@ class Countdown_Master_Shortcodes
         $seconds = $remaining->s;
 
         $title = get_option('wpct_countdown_title_field_cp');
+        $font_setting = get_option('wpct_countdown_select_font', 'Roboto');
         $title_font_size = get_option('wpct_title_font_size', '40px');
         $title_color = get_option('wpct_title_color', '#00BF96');
         $title_weight = get_option('wpct_title_weight', '600');

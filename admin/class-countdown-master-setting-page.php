@@ -30,6 +30,9 @@ class Countdown_Master_setting_Page
 
     public function wpct_plugin_settings_social_links()
     {
+        add_action('admin_footer', [$this, 'my_action_javascript']); // Write our JS below here
+        add_action('wp_ajax_my_action', [$this, 'my_action']);
+        add_action('wp_ajax_nopriv_my_action', [$this, 'my_action']);
         add_action('admin_post_wpct_save_image_upload', [$this, 'wpct_save_image_upload']);
         add_settings_section('wpct_icons_section', '', [$this, 'wpct_icons_section_callback'], 'wpct-settings-social-links');
         register_setting('wpct-settings-social-links', 'wpct_social_icons');
@@ -71,6 +74,7 @@ class Countdown_Master_setting_Page
     {
         add_settings_section('wpct_customize_section', '', '', 'wpct-settings-customize');
         register_setting('wpct-settings-customize', 'wpct_title_font_size');
+        register_setting('wpct-settings-customize', 'wpct_countdown_select_font');
         register_setting('wpct-settings-customize', 'wpct_title_color');
         register_setting('wpct-settings-customize', 'wpct_title_weight');
         register_setting('wpct-settings-customize', 'wpct_title_line_height');
@@ -103,6 +107,106 @@ class Countdown_Master_setting_Page
         add_settings_field('wpct_label_text_field', 'Display Time Label Text', [$this, 'wpct_labels_field_callback'], 'wpct-settings', 'wpct_label_settings_section');
     }
 
+    public function wpct_plugin_settings_shortcode()
+    {
+        add_settings_section('wpct_label_new_section', '', '', 'wpct-shortcode-settings');
+        register_setting('wpct-shortcode-settings', 'wpct_countdown_calendar_field_cp');
+        register_setting('wpct-shortcode-settings', 'wpct_select_time_hour');
+        register_setting('wpct-shortcode-settings', 'wpct_select_time_min');
+        add_settings_field('wpct_shortcode_date_field', 'Expiration Date', [$this, 'wpct_shortcode_new_display'], 'wpct-shortcode-settings', 'wpct_label_new_section');
+        add_settings_field('wpct_shortcode_time_field', 'Expiration Time', [$this, 'wpct_shortcode_time_display'], 'wpct-shortcode-settings', 'wpct_label_new_section');
+    }
+
+    function my_action_javascript()
+    {
+    ?>
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                // Attach a click event handler to the "Save Settings" button
+                $('#my-submit-button').on('click', function(e) {
+                    e.preventDefault();
+
+                    // Submit the form using AJAX
+                    var form = $('#my-form');
+                    var data = form.serialize();
+
+                    $.post(form.attr('action'), data, function(response) {
+                        // After the form is saved, generate the shortcode
+                        generateShortcode();
+                    });
+                });
+
+                // Function to generate and display the shortcode
+                function generateShortcode() {
+                    var data = {
+                        'action': 'my_action',
+                        'whatever': 1234
+                    };
+
+                    // Send the AJAX request to generate the shortcode
+                    $.post(ajaxurl, data, function(response) {
+                        alert('Your shortcode has been created: ' + response);
+                    });
+                }
+            });
+        </script>
+    <?php
+    }
+
+    function my_action()
+    {
+        // Process the data and generate the shortcode
+        $date_setting = get_option('wpct_countdown_calendar_field_cp');
+        $select_time_hour = get_option('wpct_select_time_hour');
+        $select_time_min = get_option('wpct_select_time_min');
+
+        // Save the options
+        update_option('wpct_select_time_hour', $select_time_hour);
+        update_option('wpct_select_time_min', $select_time_min);
+
+        $shortcode = '[wpct_countdown format="' . $date_setting . ' ' . $select_time_hour . ':' . $select_time_min . '"]';
+
+        // Return the shortcode as the response
+        echo $shortcode;
+
+        wp_die(); // Terminate immediately and return a proper response
+    }
+
+
+    public function wpct_shortcode_new_display()
+    {
+        $date_setting = get_option('wpct_countdown_calendar_field_cp');
+    ?>
+        <input type="text" name="wpct_countdown_calendar_field_cp" id="wpct-countdown-calendar" value="<?php echo isset($date_setting) ? esc_attr($date_setting) : ''; ?>">
+        <button type="button" class="wpct-calendar-trigger"><i class="dashicons dashicons-calendar-alt"></i></button>
+    <?php
+    }
+
+    public function wpct_shortcode_time_display()
+    {
+        $select_time_hour = get_option('wpct_select_time_hour');
+        $select_time_min = get_option('wpct_select_time_min');
+    ?>
+        <div class="wpct-select">
+            <select class="select of-input" name="wpct_select_time_hour">
+                <?php for ($i = 0; $i <= 23; $i++) : ?>
+                    <?php $hour = ($i < 10) ? '0' . $i : $i; ?>
+                    <option value="<?php echo $hour; ?>" <?php selected($select_time_hour, $hour); ?>><?php echo $hour; ?></option>
+                <?php endfor; ?>
+            </select>
+            :
+            <select class="select of-input" name="wpct_select_time_min">
+                <?php for ($i = 0; $i <= 59; $i++) : ?>
+                    <?php $minute = ($i < 10) ? '0' . $i : $i; ?>
+                    <option value="<?php echo $minute; ?>" <?php selected($select_time_min, $minute); ?>><?php echo $minute; ?></option>
+                <?php endfor; ?>
+            </select>
+        </div>
+    <?php
+    }
+
+
+
     public function wpct_plugin_shortcode_details()
     {
         echo '<p>To Display a Countdown on any place on the website Use Shortcode using the Below Format</p>';
@@ -111,7 +215,6 @@ class Countdown_Master_setting_Page
 
     public function wpct_countdown_title_field_cp()
     {
-        // get the value of the setting we've registered with register_setting()
         $setting = get_option('wpct_countdown_title_field_cp');
     ?>
         <input type="text" name="wpct_countdown_title_field_cp" value="<?php echo isset($setting) ? esc_attr($setting) : ''; ?>">
@@ -185,11 +288,24 @@ class Countdown_Master_setting_Page
         $title_color = get_option('wpct_title_color', '#00BF96');
         $title_weight = get_option('wpct_title_weight', '600');
         $title_line_height = get_option('wpct_title_line_height', '1.3');
+        $font_setting = get_option('wpct_countdown_select_font', 'Roboto');
     ?>
         <table class="form-table">
             <tr>
                 <th scope="row"><label for="wpct_title_font_size"><?php esc_html_e('Font Size', 'text-domain') ?></label></th>
                 <td><input type="text" name="wpct_title_font_size" value="<?php echo esc_attr($title_font_size); ?>"></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="wpct_countdown_select_font"><?php esc_html_e('Select Font', 'text-domain') ?></label></th>
+                <td>
+                    <select name="wpct_countdown_select_font">
+                        <option value="" <?php selected($font_setting, ''); ?>>Default</option>
+                        <option value="Open Sans" <?php selected($font_setting, 'Open Sans'); ?>>Open Sans</option>
+                        <option value="Roboto" <?php selected($font_setting, 'Roboto'); ?>>Roboto</option>
+                        <option value="Raleway" <?php selected($font_setting, 'Raleway'); ?>>Raleway</option>
+                        <option value="Montserrat" <?php selected($font_setting, 'Montserrat'); ?>>Montserrat</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <th scope="row"><label for="wpct_title_color"><?php esc_html_e('Color', 'text-domain') ?></label></th>

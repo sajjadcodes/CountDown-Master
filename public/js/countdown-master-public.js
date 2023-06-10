@@ -1,4 +1,4 @@
-(function( $ ) {
+(function ($) {
 	'use strict';
 
 	/**
@@ -29,7 +29,7 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
-})( jQuery );
+})(jQuery);
 
 
 
@@ -41,49 +41,49 @@ function getTimeRemaining(endtime) {
 	var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
 	var days = Math.floor(t / (1000 * 60 * 60 * 24));
 	return {
-	  'total': t,
-	  'days': days,
-	  'hours': hours,
-	  'minutes': minutes,
-	  'seconds': seconds
+		'total': t,
+		'days': days,
+		'hours': hours,
+		'minutes': minutes,
+		'seconds': seconds
 	};
-  }
-  
-  function initializeClock(id, endtime) {
+}
+
+function initializeClock(id, endtime) {
 	var clock = document.getElementById(id);
 	if (!clock) {
-	  console.error('Clock element not found');
-	  return;
+		console.error('Clock element not found');
+		return;
 	}
-  
+
 	var daysSpan = clock.querySelector('.days');
 	var hoursSpan = clock.querySelector('.hours');
-	var minutesSpan = clock.querySelector('.minutes');                                           
+	var minutesSpan = clock.querySelector('.minutes');
 	var secondsSpan = clock.querySelector('.seconds');
-  
+
 	if (!daysSpan || !hoursSpan || !minutesSpan || !secondsSpan) {
-	  console.error('Countdown elements not found');
-	  return;
+		console.error('Countdown elements not found');
+		return;
 	}
-  
+
 	function updateClock() {
-	  var t = getTimeRemaining(endtime);
-  
-	  daysSpan.textContent = t.days;
-	  hoursSpan.textContent = ('0' + t.hours).slice(-2);
-	  minutesSpan.textContent = ('0' + t.minutes).slice(-2);
-	  secondsSpan.textContent = ('0' + t.seconds).slice(-2);
-  
-	  if (t.total <= 0) {
-		clearInterval(timeinterval);
-	  }
+		var t = getTimeRemaining(endtime);
+
+		daysSpan.textContent = ('0' + t.days).slice(-2);
+		hoursSpan.textContent = ('0' + t.hours).slice(-2);
+		minutesSpan.textContent = ('0' + t.minutes).slice(-2);
+		secondsSpan.textContent = ('0' + t.seconds).slice(-2);
+
+		if (t.total <= 0) {
+			clearInterval(timeinterval);
+		}
 	}
-  
+
 	updateClock();
 	var timeinterval = setInterval(updateClock, 1000);
-  }
-  
-  var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
-  initializeClock('clockdiv', deadline);
+}
+
+var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
+initializeClock('clockdiv', deadline);
 
 

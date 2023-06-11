@@ -47,5 +47,5 @@
 </div>
 
 <script>
-    initializeClock("clockdiv", "<?php echo $deadline->format('Y-m-d\TH:i:s'); ?>");
+    initializeClock("clockdiv", "<?php echo $deadline->format('Y-m-d\TH:i:s\Z'); ?>");
 </script>

@@ -63,7 +63,7 @@ class Countdown_Master_Shortcodes
     public function wpct_countdown_shortcode($atts)
     {
         $atts = shortcode_atts(array(
-            'format' => 'default',
+            'format' => 'Y-m-d H:i:s',
             'templates' => '../countdown-1.php'
         ), $atts);
 
@@ -74,7 +74,7 @@ class Countdown_Master_Shortcodes
 
 
         $format = isset($atts['format']) ? $atts['format'] : '';
-        $deadline = new DateTime($format);
+        $deadline = new DateTime($format, new DateTimeZone('UTC'));
 
         $remaining = $deadline->diff(new DateTime());
         $days = $remaining->days;

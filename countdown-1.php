@@ -1,17 +1,7 @@
-<?php
-
-function my_page_scripts()
-{
-    wp_enqueue_script('my_script', plugin_dir_url(__FILE__) . 'public/js/countdown-master-public.js', [], '1.0', true);
-    wp_register_style('my_css', plugin_dir_url(__FILE__) . 'public/css/countdown-master-public.css', false, '1.0.0', 'all');
-}
-add_action('wp_enqueue_scripts', 'my_page_scripts');
-
-?>
-
 <!-- countdown-1.php -->
 
 <div id="clockdiv" style="text-align: <?php echo $alignment; ?>;">
+
     <?php if (!empty($image_url)) : ?>
         <img src="<?php echo esc_attr($image_thumb_url[0]); ?>" alt="Uploaded Image">
     <?php endif; ?>

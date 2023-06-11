@@ -2,7 +2,7 @@
 var Countdown = {
 
     // Backbone-like structure
-    $el: $('.countdown'),
+    jQueryel: jQuery('.countdown'),
 
     // Params
     countdown_interval: null,
@@ -12,17 +12,17 @@ var Countdown = {
     init: function () {
 
         // DOM
-        this.$ = {
-            hours: this.$el.find('.bloc-time.hours .figure'),
-            minutes: this.$el.find('.bloc-time.min .figure'),
-            seconds: this.$el.find('.bloc-time.sec .figure')
+        this.jQuery = {
+            hours: this.jQueryel.find('.bloc-time.hours .figure'),
+            minutes: this.jQueryel.find('.bloc-time.min .figure'),
+            seconds: this.jQueryel.find('.bloc-time.sec .figure')
         };
 
         // Init countdown values
         this.values = {
-            hours: this.$.hours.parent().attr('data-init-value'),
-            minutes: this.$.minutes.parent().attr('data-init-value'),
-            seconds: this.$.seconds.parent().attr('data-init-value'),
+            hours: this.jQuery.hours.parent().attr('data-init-value'),
+            minutes: this.jQuery.minutes.parent().attr('data-init-value'),
+            seconds: this.jQuery.seconds.parent().attr('data-init-value'),
         };
 
         // Initialize total seconds
@@ -35,12 +35,12 @@ var Countdown = {
     count: function () {
 
         var that = this,
-            $hour_1 = this.$.hours.eq(0),
-            $hour_2 = this.$.hours.eq(1),
-            $min_1 = this.$.minutes.eq(0),
-            $min_2 = this.$.minutes.eq(1),
-            $sec_1 = this.$.seconds.eq(0),
-            $sec_2 = this.$.seconds.eq(1);
+            jQueryhour_1 = this.jQuery.hours.eq(0),
+            jQueryhour_2 = this.jQuery.hours.eq(1),
+            jQuerymin_1 = this.jQuery.minutes.eq(0),
+            jQuerymin_2 = this.jQuery.minutes.eq(1),
+            jQuerysec_1 = this.jQuery.seconds.eq(0),
+            jQuerysec_2 = this.jQuery.seconds.eq(1);
 
         this.countdown_interval = setInterval(function () {
 
@@ -62,13 +62,13 @@ var Countdown = {
 
                 // Update DOM values
                 // Hours
-                that.checkHour(that.values.hours, $hour_1, $hour_2);
+                that.checkHour(that.values.hours, jQueryhour_1, jQueryhour_2);
 
                 // Minutes
-                that.checkHour(that.values.minutes, $min_1, $min_2);
+                that.checkHour(that.values.minutes, jQuerymin_1, jQuerymin_2);
 
                 // Seconds
-                that.checkHour(that.values.seconds, $sec_1, $sec_2);
+                that.checkHour(that.values.seconds, jQuerysec_1, jQuerysec_2);
 
                 --that.total_seconds;
             }
@@ -78,36 +78,36 @@ var Countdown = {
         }, 1000);
     },
 
-    animateFigure: function ($el, value) {
+    animateFigure: function (jQueryel, value) {
 
         var that = this,
-            $top = $el.find('.top'),
-            $bottom = $el.find('.bottom'),
-            $back_top = $el.find('.top-back'),
-            $back_bottom = $el.find('.bottom-back');
+            jQuerytop = jQueryel.find('.top'),
+            jQuerybottom = jQueryel.find('.bottom'),
+            jQueryback_top = jQueryel.find('.top-back'),
+            jQueryback_bottom = jQueryel.find('.bottom-back');
 
         // Before we begin, change the back value
-        $back_top.find('span').html(value);
+        jQueryback_top.find('span').html(value);
 
         // Also change the back bottom value
-        $back_bottom.find('span').html(value);
+        jQueryback_bottom.find('span').html(value);
 
         // Then animate
-        TweenMax.to($top, 0.8, {
+        TweenMax.to(jQuerytop, 0.8, {
             rotationX: '-180deg',
             transformPerspective: 300,
             ease: Quart.easeOut,
             onComplete: function () {
 
-                $top.html(value);
+                jQuerytop.html(value);
 
-                $bottom.html(value);
+                jQuerybottom.html(value);
 
-                TweenMax.set($top, { rotationX: 0 });
+                TweenMax.set(jQuerytop, { rotationX: 0 });
             }
         });
 
-        TweenMax.to($back_top, 0.8, {
+        TweenMax.to(jQueryback_top, 0.8, {
             rotationX: 0,
             transformPerspective: 300,
             ease: Quart.easeOut,
@@ -115,24 +115,24 @@ var Countdown = {
         });
     },
 
-    checkHour: function (value, $el_1, $el_2) {
+    checkHour: function (value, jQueryel_1, jQueryel_2) {
 
         var val_1 = value.toString().charAt(0),
             val_2 = value.toString().charAt(1),
-            fig_1_value = $el_1.find('.top').html(),
-            fig_2_value = $el_2.find('.top').html();
+            fig_1_value = jQueryel_1.find('.top').html(),
+            fig_2_value = jQueryel_2.find('.top').html();
 
         if (value >= 10) {
 
             // Animate only if the figure has changed
-            if (fig_1_value !== val_1) this.animateFigure($el_1, val_1);
-            if (fig_2_value !== val_2) this.animateFigure($el_2, val_2);
+            if (fig_1_value !== val_1) this.animateFigure(jQueryel_1, val_1);
+            if (fig_2_value !== val_2) this.animateFigure(jQueryel_2, val_2);
         }
         else {
 
             // If we are under 10, replace first figure with 0
-            if (fig_1_value !== '0') this.animateFigure($el_1, 0);
-            if (fig_2_value !== val_1) this.animateFigure($el_2, val_1);
+            if (fig_1_value !== '0') this.animateFigure(jQueryel_1, 0);
+            if (fig_2_value !== val_1) this.animateFigure(jQueryel_2, val_1);
         }
     }
 };

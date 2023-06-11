@@ -54,6 +54,7 @@ class Countdown_Master_Shortcodes
             }
 
             $output .= '</ul>';
+            // var_dump($social_icons);
         }
 
         return $output;
@@ -105,7 +106,7 @@ class Countdown_Master_Shortcodes
 
         ob_start();
         $templates = get_option('wpct_templates', '');
-        include(plugin_dir_path(__FILE__) . '' . $templates);
+        include(plugin_dir_path(__FILE__) . '/' . $templates);
 
         $output = ob_get_clean();
 

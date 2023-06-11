@@ -32,6 +32,19 @@
                             <span><?php echo sprintf('%02d', $days)[1]; ?></span>
                         </span>
                     </div>
+
+                    <?php if ($days >= 100) : ?>
+                        <div class="figure days days-3">
+                            <span class="top"><?php echo sprintf('%02d', $days)[2]; ?></span>
+                            <span class="top-back">
+                                <span><?php echo sprintf('%02d', $days)[2]; ?></span>
+                            </span>
+                            <span class="bottom"><?php echo sprintf('%02d', $days)[2]; ?></span>
+                            <span class="bottom-back">
+                                <span><?php echo sprintf('%02d', $days)[2]; ?></span>
+                            </span>
+                        </div>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
 

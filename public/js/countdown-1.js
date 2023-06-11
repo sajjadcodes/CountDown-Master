@@ -69,7 +69,14 @@ function initializeClock(id, endtime) {
 	function updateClock() {
 		var t = getTimeRemaining(endtime);
 
-		daysSpan.textContent = ('0' + t.days).slice(-2);
+		var formattedDays = ('0' + t.days).slice(-2); // Always format as two digits
+
+		if (t.days > 99) {
+			// Format days with three digits if greater than 99
+			formattedDays = ('000' + t.days).slice(-3);
+		}
+
+		daysSpan.textContent = formattedDays;
 		hoursSpan.textContent = ('0' + t.hours).slice(-2);
 		minutesSpan.textContent = ('0' + t.minutes).slice(-2);
 		secondsSpan.textContent = ('0' + t.seconds).slice(-2);

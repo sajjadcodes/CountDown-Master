@@ -202,14 +202,6 @@ class Countdown_Master_setting_Page
     <?php
     }
 
-
-
-    // public function wpct_plugin_shortcode_details()
-    // {
-    //     echo '<p>To Display a Countdown on any place on the website Use Shortcode using the Below Format</p>';
-    //     echo '<p>[wpct_countdown format="2023-07-10"]</p>';
-    // }
-
     public function wpct_countdown_title_field_cp()
     {
         $setting = get_option('wpct_countdown_title_field_cp');
@@ -235,6 +227,7 @@ class Countdown_Master_setting_Page
         <?php endif; ?>
     <?php
     }
+
 
     function wpct_save_image_upload()
     {

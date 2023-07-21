@@ -38,12 +38,12 @@ class Countdown_Master_Menu
             <h1 style="color: #111111"><?php echo esc_html(get_admin_page_title()); ?></h1>
             <?php settings_errors(); ?>
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab-1">General Settings</a></li>
-                <li><a href="#tab-2">Add Image</a></li>
-                <li><a href="#tab-3">Customize</a></li>
-                <li><a href="#tab-4">Social Links</a></li>
-                <li><a href="#tab-5">Templates</a></li>
-                <li><a href="#tab-6">Generate Shortcode</a></li>
+                <li class="active"><a href="#tab-1"><?php esc_html_e('General Settings', 'countdown-master');?></a></li>
+                <li><a href="#tab-2"><?php esc_html_e('Add Image', 'countdown-master');?></a></li>
+                <li><a href="#tab-3"><?php esc_html_e('Customize', 'countdown-master');?></a></li>
+                <li><a href="#tab-4"><?php esc_html_e('Social Links', 'countdown-master');?></a></li>
+                <li><a href="#tab-5"><?php esc_html_e('Templates', 'countdown-master');?></a></li>
+                <li><a href="#tab-6"><?php esc_html_e('Generate Shortcode', 'countdown-master');?></a></li>
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active">
@@ -56,7 +56,7 @@ class Countdown_Master_Menu
                     </form>
                 </div>
                 <div id="tab-2" class="tab-pane">
-                    <h3>Add Image</h3>
+                    <h3><?php esc_html_e('Add Image ', 'countdown-master');?></h3>
                     <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" enctype="multipart/form-data">
                         <?php
                         settings_fields('wpct-image-settings');
@@ -67,7 +67,7 @@ class Countdown_Master_Menu
                     </form>
                 </div>
                 <div id="tab-3" class="tab-pane">
-                    <h3>Customize</h3>
+                    <h3><?php esc_html_e('Customize', 'countdown-master');?></h3>
                     <form action="options.php" method="post">
                         <?php
                         settings_fields('wpct-settings-customize');
@@ -77,7 +77,7 @@ class Countdown_Master_Menu
                     </form>
                 </div>
                 <div id="tab-4" class="tab-pane">
-                    <h3>Social Links</h3>
+                    <h3><?php esc_html_e('Social Links', 'countdown-master');?></h3>
                     <form action="options.php" method="post">
                         <?php
                         settings_fields('wpct-settings-social-links');
@@ -87,7 +87,7 @@ class Countdown_Master_Menu
                     </form>
                 </div>
                 <div id="tab-5" class="tab-pane">
-                    <h3>Templates</h3>
+                    <h3><?php esc_html_e('Templates', 'countdown-master');?></h3>
                     <form action="options.php" method="post">
                         <?php
                         settings_fields('wpct-settings-templates');
@@ -97,7 +97,7 @@ class Countdown_Master_Menu
                     </form>
                 </div>
                 <div id="tab-6" class="tab-pane">
-                    <h3>Generate Shortcode</h3>
+                    <h3><?php esc_html_e('Generate Shortcode', 'countdown-master');?></h3>
                     <form id="my-form" action="options.php" method="post">
                         <?php
                         settings_fields('wpct-shortcode-settings');
